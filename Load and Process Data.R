@@ -24,4 +24,7 @@ for(feat in common.features){
   hop[[feat]] <- grepl(tolower(feat), tolower(features))
 }
 
+hop$n.photos <- unname(sapply(photos, length))
+
+saveRDS(common.features, 'data/feature_names.rds')
 saveRDS(hop, 'data/hop_df.rds')
