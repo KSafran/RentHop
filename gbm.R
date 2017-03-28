@@ -7,6 +7,7 @@
 # load_libraries()
 # hop <- load_training_data()
 source('utils.R')
+source('Modeling Functions.R')
 
 # Set up GBM
 train.indicator <- runif(nrow(hop)) < 0.7
@@ -35,6 +36,7 @@ gbm.parameters <- list(eta = 0.1,
                        objective = 'multi:softprob',
                        num_class = 3)
 
+set.seed(10)
 gbm.model <- xgb.train(params = gbm.parameters,
                        data = train.xgbd.matrix,
                        watchlist = watchlist,
@@ -48,3 +50,8 @@ test.predictions <- predict(gbm.model, newdata = test.xgbd.matrix,
 
 competition_loss(predictions = test.predictions, 
                  actuals = hop$class[!train.indicator])
+
+model.specs <- structure(list(model = gbm.model,
+                              formula = model.formula ),
+                         class = 'xgboost.model')
+saveRDS(model.specs, file = 'data/gbm.rds')
