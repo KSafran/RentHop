@@ -13,11 +13,13 @@ hop <- readRDS('data/hop_df.rds')
 colnames(hop) <- rename_features(colnames(hop))
 
 # Let's extract some features 
-hop$description.length <- 
 description.regex <- c(website = 'website_redacted',
                        description.view = 'view')
-hop %>% 
-  mutate(description.length = nchar(as.character(hop$description)))
+hop <- hop %>% 
+  mutate(description.length = nchar(as.character(hop$description)),
+         price.per.bedrooms = ifelse(is.infinite(price/bedrooms), 0, price/bedrooms),
+         price.pre.bath = ifelse(is.infinite(price/bathrooms), 0, price/bathrooms))
+         
 #numeric response variable for XGBoost
 #Low = 1; Medium = 2; High = 3;
 interest_num <- data.table(interest_level = c('low','medium','high'), class = c(0,1,2))
