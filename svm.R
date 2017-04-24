@@ -1,3 +1,0 @@
-### SVM
-
-library(kernlab)

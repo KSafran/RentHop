@@ -1,19 +1,14 @@
 ## Overview
-This is the codebook for the Kaggle Competition involving Two Sigma and RentHop. Here, we can detail 
-what our various scripts do (or, at least what they're *supposed* to do). To help streamline the 
-collaboration process, any key additions or deletions should be noted here. 
+This is the codebook for the Kaggle Competition involving Two Sigma and RentHop. Here, we can detail what our various scripts do (or, at least what they're *supposed* to do). To help streamline the collaboration process, any key additions or deletions should be noted here. 
 
-## Load and EDA.R
-This code reads in the `train.json` data, converts it to a data frame, and creates individual fields
-for common features found in the listings. After these transformations, the data frame is saved as 
-`data/hop_df.rds`.
+## load and process/loading_function.R
+In here there is a function that loads in the `train.json` data, converts it to a data frame, and creates individual fields for common features found in the listings. After these transformations, the data frame is saved as an .rds file to streamline loading.
 
-## utils.R
-This code performs some simple tasks that should make our lives easier and our code a bit cleaner. 
-* Loads in various packages
-* Reads in data from `data/hop_df.rds`
-* Defines a numeric response variable `class` 
-	* 1 = low interest
-	* 2 = medium interest
-	* 3 = high interest
-* Renames any variables that include problematic characters (such as hyphens, slashes, or parentheses)
+## gbm.R
+This code reads in the training data, and fits a GBM. At this point we haven't really done much cross-validation, so there is a lot of room to improve this model. The end goal here would be an automated grid search (or bayesian hyperparameter optimization).
+
+## Modeling Functions.R
+This code contains some basic functions for model fitting. It includes the loss function used for scoring competition entries.
+
+## images/download_photos.R
+This file downloads the first photo associated with each listing and extracts some basic metadata about the file. The end goal here would be to feed these photos into tensorflow in python.
